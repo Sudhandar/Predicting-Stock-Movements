@@ -12,4 +12,13 @@ targets are identified with 13368 targets with positive (i.e.,1) labels and 1325
 ## Approach
 
 To predict the stock movement, two methods are. First, the tweets related to stock S are fed into BERT/GPT-2 to train the models to predict the stock movements. The models can directly predict the stock movement based on the information learned from the textual corpora,
-(i.e., 0/1 ). In the second method, the system utilizes a larger twitter dataset with approximately 1.6 million samples. The BERT model is trained on the 1.6 million tweet samples to predict the sentiments. This trained model is used to predict the sentiments on the StockNet Twitter dataset.  The average of the sentiments is calculated for a target stock S, on a target trading day d and compared with the stock movements for the target stock S, on a target trading day d. 
+(i.e., 0/1 ). In the second method, the system utilizes a larger twitter dataset with approximately 1.6 million samples. The BERT model is trained on the 1.6 million tweet samples to predict the sentiments. This trained model is used to predict the sentiments on the StockNet Twitter dataset.  The average of the sentiments is calculated for a target stock S, on a target trading day d and compared with the stock movements for the target stock S, on a target trading day d.
+
+### Approach 1
+
+![alt text](https://github.com/Sudhandar/Predicting-Stock-Movements/blob/main/images/approach_1.png)
+
+### Approach 2
+
+![alt text](https://github.com/Sudhandar/Predicting-Stock-Movements/blob/main/images/approach_2.png)
+
