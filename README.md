@@ -107,3 +107,8 @@ hood objective.
 
 Even though BERT and GPT-2 are trained on large text corpora and surpass state-of-the-art results in many language tasks it is still not able to achieve higher accuracy and MCC than certain StockNet Variations like Fundamental Analyst and Hedgefund analyst. On further analyzing the reason behind this and found out that the main reason is the use of the temporal auxiliary attention mechanism in StockNet. It acts as a denoising regularizer which helps the model to filter out noises like a temporary rise in a positive movement when the market has an upward trend and helps the model to focus on the main target and generalize well by denoising. This task-specific attention mechanism is not found in models like BERT and GPT-2 even though they learn context by masked self-attention.
 
+## Reference
+
+- [1] Xu, Y., &amp; Cohen, S. B. (2018). Stock movement prediction from tweets and historical prices. Proceedings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers). https://doi.org/10.18653/v1/p18-1183 
+- [2] Zhang, T., Wu, F., Katiyar, A., Weinberger, K. Q., & Artzi, Y. (2020). Revisiting few-sample BERT fine-tuning. arXiv preprint arXiv:2006.05987.
+- [3] https://towardsdatascience.com/advanced-techniques-for-fine-tuning-transformers-82e4e61e16e
