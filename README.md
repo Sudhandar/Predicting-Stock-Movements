@@ -22,3 +22,25 @@ To predict the stock movement, two methods are. First, the tweets related to sto
 
 ![alt text](https://github.com/Sudhandar/Predicting-Stock-Movements/blob/main/images/approach_2.png)
 
+## Fine tuning BERT
+
+Instead of using a single learning rate, several variations of layer-wise learning rate decays have been used to improve the performance of BERT/GPT-2. The final results show that the technique significantly enhances the performance. Furthermore,another type of layer-wiselearning rate decay where 12 layers of BERT are grouped into sets of 4 layers and different learning rates are applied to each set known as grouped layer-wise Learning Rate Decay is incorporated. The method resulted in even better performance of the BERT model. The following are the final learning rates used for the model,
+
+- Set 1: Embeddings + Layer 0, 1, 2, 3, (learning rate: 1e−6)
+- Set 2: Embeddings + Layer 4, 5, 6, 7, (learning rate: 1.75e−6)
+- Set 3: Embeddings + Layer 8, 9, 10, 11, (learning rate: 3.5e−6)
+
+### Layer-wise learning rate decay ([Image Source](https://towardsdatascience.com/advanced-techniques-for-fine-tuning-transformers-82e4e61e16e))
+
+![alt text](https://github.com/Sudhandar/Predicting-Stock-Movements/blob/main/images/layer_rate_decay.png)
+
+
+### Grouped layer-wise learning rate decay ([Image Source](https://towardsdatascience.com/advanced-techniques-for-fine-tuning-transformers-82e4e61e16e))
+
+![alt text](https://github.com/Sudhandar/Predicting-Stock-Movements/blob/main/images/grouped_rate_decay.png)
+
+
+### Re-initializing pre-trained layers of BERT
+
+BERT has 12 layers, and each layer of the BERT captures various kinds of information. The lower layers contain low-level representations and store generic information. The task-related information is stored on the top layers of the BERT closer to the output. (Zhang et al. [2]) in their paper,suggested that re-initializing these top layers will increase the performance of BERT on several downstream tasks. Based on their work,  the top 3 layers of the BERT have been reinitialzed for the direct stock movement prediction model.
+
