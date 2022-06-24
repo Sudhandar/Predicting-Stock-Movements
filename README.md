@@ -44,3 +44,66 @@ Instead of using a single learning rate, several variations of layer-wise learni
 
 BERT has 12 layers, and each layer of the BERT captures various kinds of information. The lower layers contain low-level representations and store generic information. The task-related information is stored on the top layers of the BERT closer to the output. (Zhang et al. [2]) in their paper,suggested that re-initializing these top layers will increase the performance of BERT on several downstream tasks. Based on their work,  the top 3 layers of the BERT have been reinitialzed for the direct stock movement prediction model.
 
+## Results
+
+### BERT Results
+
+| Models                                                                                                   | Accuracy | MCC    |
+|----------------------------------------------------------------------------------------------------------|---------|--------|
+| Base BERT model                                                                                          | 46.7    | -0.03  |
+| BERT + Layer wise learning rate decay                                                                    | 47.8    | 0.005  |
+| BERT + Grouped Layer wise learning rate decay                                                            | 51      | 0.007  |
+| BERT + Grouped Layer wise learning rate decay +<br>Reinitializing top 3 layers of BERT + 50 warmup steps | 53      | 0.0344 |
+
+### BERT Approach 1 vs Approach 2 results
+
+| Models                                       |Accuracy | MCC    |
+|----------------------------------------------|---------|--------|
+| BERT direct prediction                       | 53      | 0.0344 |
+| BERT prediction based on sentiments analysis | 52.3    | 0.025  |
+
+### GPT-2 Results
+
+| Models                  |Accuracy | MCC   |
+|-------------------------|---------|-------|
+| GPT-2 Base              | 51      | 0.011 |
+| GPT-2 after fine-tuning | 54      | 0.024 |
+
+### Comparison with baseline models
+
+The performance of the proposed models is compared with the baseline models used in [1]. The following are the baseline models considered,
+- RAND: a naive predictor making random guesses up or down.
+- ARIMA: Autoregressive Integrated Moving Average, an advanced technical analysis method using only price signals
+- RANDFOREST: a discriminative Random Forest classifier using Word2vec text representations
+- TSLDA: a generative topic model jointly learning topics and sentiments
+- HAN: a state-of-the-art discriminative deep neural network with hierarchical attention
+
+| Models     |Accuracy | MCC       | Models                                           |Accuracy | MCC    |
+|------------|---------|-----------|--------------------------------------------------|---------|--------|
+| RAND       | 50.89   | −0.002266 | BERT direct prediction                           | 53      | 0.0344 |
+| ARIMA      | 51.31   | −0.020588 | BERT prediction based on <br>sentiments analysis | 52.3    | 0.025  |
+| RANDFOREST | 50.08   | 0.012929  | GPT-2                                            | 54      | 0.024  |
+| TSLDA      | 54.07   | 0.065382  |                                                  |         |        |
+| HAN        | 57.64   | 0.0518    |                                                  |         |        |
+
+
+Furthermore, the performance of the proposed models is also compared with the models introduced in [1].The following are presented as the StockNet variations introduced in [1],
+
+- TECHNICALANALYST: the generative StockNet using only historical prices.
+- FUNDAMENTALANALYST: the generative StockNet using only tweet information.
+- INDEPENDENTANALYST: the generative StockNet without temporal auxiliary targets.
+- DISCRIMINATIVEANALYST: the discriminative StockNet directly optimizing the likeli-
+hood objective.
+
+| StockNet variations    |Accuracy | MCC      | Models                                       |Accuracy | MCC    |
+|------------------------|---------|----------|----------------------------------------------|---------|--------|
+| TECHNICAL ANALYST      | 54.96   | 0.016456 | BERT direct prediction                       | 53      | 0.0344 |
+| FUNDAMENTAL ANALYST    | 58.23   | 0.071704 | BERT prediction based on sentiments analysis | 52.3    | 0.025  |
+| INDEPENDENT ANALYST    | 57.54   | 0.03661  | GPT-2                                        | 54      | 0.024  |
+| DISCRIMINATIVE ANALYST | 56.15   | 0.056493 |                                              |         |        |
+| HEDGEFUND ANALYST      | 58.23   | 0.080796 |                                              |         |        |
+
+### Results Evaluation
+
+Even though BERT and GPT-2 are trained on large text corpora and surpass state-of-the-art results in many language tasks it is still not able to achieve higher accuracy and MCC than certain StockNet Variations like Fundamental Analyst and Hedgefund analyst. On further analyzing the reason behind this and found out that the main reason is the use of the temporal auxiliary attention mechanism in StockNet. It acts as a denoising regularizer which helps the model to filter out noises like a temporary rise in a positive movement when the market has an upward trend and helps the model to focus on the main target and generalize well by denoising. This task-specific attention mechanism is not found in models like BERT and GPT-2 even though they learn context by masked self-attention.
+
